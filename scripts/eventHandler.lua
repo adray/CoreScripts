@@ -770,6 +770,29 @@ eventHandler.OnObjectActivate = function(pid, cellDescription)
                     object.activatingPid = tes3mp.GetObjectActivatingPid(index)
                     debugMessage = debugMessage .. logicHandler.GetChatName(object.activatingPid)
 
+					-- ActivePlayer.lua Mod begin
+					activatingPid = tes3mp.GetObjectActivatingPid(index)
+
+                    if isObjectPlayer then
+                        Players[activatingPid].data.targetPid = object.pid
+						tes3mp.LogAppend(enumerations.log.INFO, "Checking player state")
+                        --ActivePlayer.OnCheckStatePlayer(object.pid, activatingPid)
+						
+						local PlayerActivatedHealth = tes3mp.GetHealthCurrent(object.pid)
+	
+						if PlayerActivatedHealth <= 0 then
+							Players[activatingPid].currentCustomMenu = "resurrect player"--Menu Resurrect
+							tes3mp.LogAppend(enumerations.log.INFO, "Display menu")
+							menuHelper.DisplayMenu(activatingPid, Players[activatingPid].currentCustomMenu)	
+							tes3mp.LogAppend(enumerations.log.INFO, object.pid)		
+						else
+							Players[activatingPid].currentCustomMenu = "active player"--other Menu
+							menuHelper.DisplayMenu(activatingPid, Players[activatingPid].currentCustomMenu)				
+						end
+					
+					end
+					-- ActivePlayer.lua Mod end
+					
                     if tes3mp.GetSneakState(object.activatingPid) then
                         debugMessage = debugMessage .. " while sneaking"
                     end
@@ -1428,10 +1451,10 @@ eventHandler.OnVideoPlay = function(pid)
         end
 
         if config.shareVideos == true then
-            tes3mp.LogMessage(enumerations.log.INFO, "Sharing VideoPlay from " .. logicHandler.GetChatName(pid))
+            tes3mp.LogMessage(enumerations.log.WARN, "Sharing VideoPlay from " .. logicHandler.GetChatName(pid))
                 
             local videos = {}
-
+            
             for i = 0, tes3mp.GetObjectListSize() - 1 do
                 local videoFilename = tes3mp.GetVideoFilename(i)
                 table.insert(videos, videoFilename)

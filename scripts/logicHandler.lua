@@ -790,4 +790,12 @@ logicHandler.UnloadRegionForPlayer = function(pid, regionName)
     end
 end
 
+-- ActivePlayer.lua mod begin
+logicHandler.ResurrectPlayer = function(targetPid)
+    tes3mp.Resurrect(tonumber(targetPid), 0)
+	
+	tes3mp.StopTimer(Players[tonumber(targetPid)].resurrectTimerId)
+end
+-- ActivePlayer.lua mod end
+
 return logicHandler

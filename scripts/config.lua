@@ -111,10 +111,12 @@ config.bannedEquipmentItems = { "helseth's ring" }
 config.playersRespawn = true
 
 -- Time to stay dead before being respawned, in seconds
-config.deathTime = 5
+--config.deathTime = 5
+config.deathTime = 120
 
 -- The number of days spent in jail as a penalty for dying, when respawning
-config.deathPenaltyJailDays = 5
+--config.deathPenaltyJailDays = 5
+config.deathPenaltyJailDays = 0
 
 -- Whether players' bounties are reset to 0 after dying
 config.bountyResetOnDeath = false
@@ -141,7 +143,7 @@ config.rankColors = { serverOwner = color.Orange, admin = color.Red, moderator =
 config.customMenuIds = { menuHelper = 9001, confiscate = 9002, recordPrint = 9003 }
 
 -- The menu files that should be loaded for menuHelper, from the scripts/menu subfolder
-config.menuHelperFiles = { "help", "defaultCrafting", "advancedExample" }
+config.menuHelperFiles = { "help", "defaultCrafting", "advancedExample", "gameplayMenus" }
 
 -- What the difference in ping needs to be in favor of a new arrival to a cell or region
 -- compared to that cell or region's current player authority for the new arrival to become
