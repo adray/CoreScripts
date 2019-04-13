@@ -1,5 +1,7 @@
 local commandHandler = {}
 
+require('cellData')
+
 function commandHandler.ProcessCommand(pid, cmd)
 
     if cmd[1] == nil then
@@ -1153,7 +1155,27 @@ function commandHandler.ProcessCommand(pid, cmd)
 
         -- Check "scripts/menu/advancedExample.lua" if you want to change the advanced menu example
         Players[pid].currentCustomMenu = "advanced example origin"
-        menuHelper.DisplayMenu(pid, Players[pid].currentCustomMenu)
+        menuHelper.DisplayMenu(pid, Players[pid].currentCustomMenu)		
+	
+	elseif cmd[1] == "where" then
+	
+		-- Send players the name of the cell we are in
+
+		local cell = Players[pid].data.location.cell
+		local cellName = cellDescriptionData[cell]
+		
+        local cellDescription = cellName
+		
+		if cellDescription == "" or cellDescription == nil then
+			cellDescription = Players[pid].data.location.regionName
+		end
+		
+		if cellDescription == ""  or cellDescription == nil then
+			cellDescription = Players[pid].data.location.cell
+		end
+			
+		local message = logicHandler.GetChatName(pid) .. " is located in " .. cellDescription .. "\n"
+		tes3mp.SendMessage(pid, message, true)
 
     else
         local message = "Not a valid command. Type /help for more info.\n"
